@@ -21,7 +21,10 @@ def get_data(data):
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
     return X_train, X_test, Y_train, Y_test
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 35716c7cea87e6bce7e485184ec07330661ae1d7
 def create_model(size):
     model = Sequential()
     model.add(InputLayer(size[1:]))
@@ -30,3 +33,7 @@ def create_model(size):
     model.add(LSTM(32, activation = 'relu', dropout = 0.2,))
     model.add(Dense(1, activation = "relu"))
     return model
+<<<<<<< HEAD
+=======
+
+>>>>>>> 35716c7cea87e6bce7e485184ec07330661ae1d7
