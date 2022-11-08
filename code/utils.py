@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
-from keras.layers import LSTM, Dense, InputLayer
+from keras.layers import LSTM, Dense, Dropout
 from keras import Sequential
 
 # Loads dataset and seperates into X and Y
@@ -21,12 +21,11 @@ def get_data(data):
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
     return X_train, X_test, Y_train, Y_test
 
-def create_model(size):
+def create_model():
     model = Sequential()
-    model.add(InputLayer(size[1:]))
-    model.add(LSTM(128, activation = 'relu', dropout = 0.2,))
-    model.add(LSTM(64, activation = 'relu', dropout = 0.2,))
-    model.add(LSTM(32, activation = 'relu', dropout = 0.2,))
+    model.add(LSTM(64, input_shape = (62,2), dropout = 0.2, return_sequences=True))
+    model.add(LSTM(10, dropout = 0.2, return_sequences=True))
+    model.add(Dropout(0.25))
     model.add(Dense(1, activation = "relu"))
     return model
 
