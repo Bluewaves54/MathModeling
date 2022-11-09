@@ -29,4 +29,3 @@ def create_model(size):
     model.add(LSTM(32, activation = 'relu', dropout = 0.2,))
     model.add(Dense(1, activation = "relu"))
     return model
-
