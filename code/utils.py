@@ -4,6 +4,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 from keras.layers import LSTM, Dense, InputLayer
 from keras import Sequential
+from string import ascii_lowercase
 
 # Loads dataset and seperates into X and Y
 scaler = MinMaxScaler()
@@ -29,3 +30,19 @@ def create_model(size):
     model.add(LSTM(32, activation = 'relu', dropout = 0.2,))
     model.add(Dense(1, activation = "relu"))
     return model
+
+def format_ppm_x(data:pd.DataFrame, num_previous_vals: int):
+    iterator, new_data = list(data.iterrows())[num_previous_vals:], {i: [] for i in range(num_previous_vals+1)[::-1]}
+    print('checkpoint 1')
+    for index, val in iterator:
+        for i in range(num_previous_vals+1)[::-1]:
+            new_data[i].append(data.iloc[index-i][1])
+    
+    return pd.DataFrame(new_data)
+
+
+def decompose(data):
+    eemd_decomp = {ascii_lowercase[i]: val for i, val in enumerate(EEMD(data))}
+    vmd_decomp = {f'a{i}': val for i, val in VMD(eemd_decomp[0])}
+    full_decomp = eemd_decomp | vmd_decomp
+
