@@ -33,12 +33,12 @@ def create_model():
     return model
 
 def format_ppm_x(data:pd.DataFrame, num_previous_vals: int):
-    iterator, new_data = list(data.iterrows())[num_previous_vals:], {i: [] for i in range(num_previous_vals+1)[::-1]}
+    iterator, new_data = list(data.iteritems())[num_previous_vals:], {i: [] for i in range(num_previous_vals+1)[::-1]}
     print('checkpoint 1')
     for index, val in iterator:
         for i in range(num_previous_vals+1)[::-1]:
-            new_data[i].append(data.iloc[index-i][1])
-   
+            new_data[i].append(data[index-i])
+    
     return pd.DataFrame(new_data)
 
 
